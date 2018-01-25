@@ -1,6 +1,8 @@
 #include "Person.h"
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 #include "../Util/Random.h"
 
@@ -57,10 +59,26 @@ void Person::update()
 
 void Person::fight(Person& other)
 {
+	
     if (other.m_colony == 0)
         return;
 
-    if (other.m_strength >= m_strength)
+	srand(time(NULL));
+
+	if (other.m_strength == 0 || m_strength == 0)
+	{
+		m_strength == 0 ? kill() : other.kill();
+		return;
+	}
+
+
+	if (rand() % other.m_strength == 1)
+	{
+		other.kill();
+		return;
+	}
+	
+    if (rand() % ((m_strength * m_strength ) + (other.m_strength * other.m_strength)) > (m_strength * m_strength))
     {
         kill();
     }
